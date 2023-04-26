@@ -1,9 +1,9 @@
 package com.example.restApiExample.dao;
 
+import com.example.restApiExample.exeptions.PersonNotFoundException;
 import com.example.restApiExample.model.Person;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -20,8 +20,11 @@ public class PersonDao {
     }
   }
 
-  public Optional<Person> getById(int id) {
-    return people.stream().filter(person -> person.getId() == id).findFirst();
+  public Person getById(int id) throws PersonNotFoundException {
+    return people.stream()
+        .filter(person -> person.getId() == id)
+        .findFirst()
+        .orElseThrow(PersonNotFoundException::new);
   }
 
   public List<Person> getAll() {
@@ -33,8 +36,8 @@ public class PersonDao {
     return newPerson;
   }
 
-  public Person update(int id, Person newPerson) {
-    var personToUpdate = getById(id).orElseThrow();
+  public Person update(int id, Person newPerson) throws PersonNotFoundException {
+    var personToUpdate = getById(id);
 
     personToUpdate.setFirstName(newPerson.getFirstName());
     personToUpdate.setLastName(newPerson.getLastName());
@@ -44,8 +47,8 @@ public class PersonDao {
     return personToUpdate;
   }
 
-  public Person delete(int id) {
-    var personToDelete = getById(id).orElseThrow();
+  public Person delete(int id) throws PersonNotFoundException {
+    var personToDelete = getById(id);
     people.remove(personToDelete);
     return personToDelete;
   }

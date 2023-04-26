@@ -1,9 +1,14 @@
 package com.example.restApiExample.controller;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
+import com.example.restApiExample.exeptions.PersonNotFoundException;
 import com.example.restApiExample.model.Person;
 import com.example.restApiExample.service.PersonService;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,13 +18,19 @@ public class PersonController {
   private final PersonService personService;
 
   @GetMapping("/people")
-  List<Person> getAllPeople() {
-    return personService.getAll();
+  CollectionModel<Person> getAllPeople() {
+    return CollectionModel.of(
+        personService.getAll(),
+        linkTo(methodOn(PersonController.class).getAllPeople()).withSelfRel());
   }
 
   @GetMapping("/person/{id}")
-  Person getById(@PathVariable Integer id) {
-    return personService.getById(id);
+  public EntityModel<Person> getById(@PathVariable Integer id) throws PersonNotFoundException {
+    return EntityModel.of(
+        personService.getById(id),
+        linkTo(methodOn(PersonController.class).getById(id)).withSelfRel(),
+        linkTo(methodOn(PersonController.class).deletePerson(id)).withRel("delete"),
+        linkTo(methodOn(PersonController.class).getAllPeople()).withRel("list all"));
   }
 
   @PostMapping("/person")

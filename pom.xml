@@ -15,13 +15,19 @@
 	<description>Example REST application with Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>
-		<springfox.version>3.0.0</springfox.version>
+		<springfox.version>3.0.6</springfox.version>
+		<snakeyaml.version>2.0</snakeyaml.version>
 	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-hateoas</artifactId>
+		</dependency>
+
 
 		<dependency>
 			<groupId>org.projectlombok</groupId>

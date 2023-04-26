@@ -1,6 +1,7 @@
 package com.example.restApiExample.service;
 
 import com.example.restApiExample.dao.PersonDao;
+import com.example.restApiExample.exeptions.PersonNotFoundException;
 import com.example.restApiExample.model.Person;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -12,8 +13,8 @@ public class PersonService {
 
   private final PersonDao personDao;
 
-  public Person getById(int id) {
-    return personDao.getById(id).orElseThrow();
+  public Person getById(int id) throws PersonNotFoundException {
+    return personDao.getById(id);
   }
 
   public List<Person> getAll() {
