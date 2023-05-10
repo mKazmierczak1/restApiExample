@@ -52,4 +52,10 @@ public class PersonDao {
     people.remove(personToDelete);
     return personToDelete;
   }
+
+  public List<Person> getAllFromCompany(String companyName) {
+    return people.stream()
+        .filter(person -> person.getWorkplace().getName().equalsIgnoreCase(companyName))
+        .toList();
+  }
 }

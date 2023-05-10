@@ -22,4 +22,10 @@ public class CompanyDao {
   public Optional<Company> getById(int id) {
     return companies.stream().filter(company -> company.getId() == id).findFirst();
   }
+
+  public Optional<Company> getByName(String name) {
+    return companies.stream()
+        .filter(company -> company.getName().equalsIgnoreCase(name))
+        .findFirst();
+  }
 }

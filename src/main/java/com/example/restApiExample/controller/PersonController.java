@@ -3,9 +3,12 @@ package com.example.restApiExample.controller;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+import com.example.restApiExample.exeptions.IncorrectNewPersonException;
 import com.example.restApiExample.exeptions.PersonNotFoundException;
+import com.example.restApiExample.model.Company;
 import com.example.restApiExample.model.Person;
 import com.example.restApiExample.service.PersonService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -35,6 +38,10 @@ public class PersonController {
 
   @PostMapping("/person")
   Person newPerson(@RequestBody Person newPerson) {
+    if (newPerson.getFirstName().isEmpty() || newPerson.getLastName().isEmpty()) {
+      throw new IncorrectNewPersonException();
+    }
+
     return personService.put(newPerson);
   }
 
@@ -46,5 +53,15 @@ public class PersonController {
   @DeleteMapping("/person/{id}")
   Person deletePerson(@PathVariable Integer id) {
     return personService.delete(id);
+  }
+
+  @PutMapping("/person/changeCompany/{id}")
+  Person changeCompany(@PathVariable Integer id, @RequestBody Company newCompany) {
+    return personService.update(id, newCompany);
+  }
+
+  @PostMapping("/getPeopleFromCompany")
+  List<Person> getPeopleFromCompany(@RequestBody Company company) {
+    return personService.getAllFromCompany(company.getName());
   }
 }
