@@ -1,6 +1,6 @@
 package com.example.rsiMiniProject.service;
 
-import com.example.rsiMiniProject.producer.MessageProducer;
+import com.example.rsiMiniProject.rabbit.MessageProducer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

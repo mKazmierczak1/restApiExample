@@ -1,9 +1,7 @@
 package com.example.rsiMiniProject.service;
 
-import com.example.rsiMiniProject.dao.ImageDao;
 import com.example.rsiMiniProject.exeptions.ImageNotFoundException;
-import com.example.rsiMiniProject.model.Image;
-import java.util.List;
+import com.example.rsiMiniProject.rabbit.ImageRpcHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,25 +9,17 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ImageService {
 
-  private final ImageDao imageDao;
+  private final ImageRpcHandler imageRpcHandler;
 
-  public Image getById(int id) throws ImageNotFoundException {
-    return imageDao.getById(id);
+  public byte[] getImageById(int id) throws ImageNotFoundException {
+    return imageRpcHandler.getImage("jpg", id);
   }
 
-  public List<Image> getAll() {
-    return imageDao.getAll();
+  public byte[] getGifById(int id) throws ImageNotFoundException {
+    return imageRpcHandler.getImage("gif", id);
   }
 
-  public Image put(Image newImage) {
-    return imageDao.put(newImage);
-  }
-
-  public Image update(int id, Image newImage) {
-    return imageDao.update(id, newImage);
-  }
-
-  public Image delete(int id) {
-    return imageDao.delete(id);
-  }
+  //  public Image put(Image newImage) {
+  //    return imageDao.put(newImage);
+  //  }
 }

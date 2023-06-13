@@ -1,4 +1,4 @@
-package com.example.rsiMiniProject.producer;
+package com.example.rsiMiniProject.rabbit;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.core.DirectExchange;

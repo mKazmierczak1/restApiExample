@@ -4,6 +4,8 @@ spring:
     host: localhost
     username: guest
     password: guest
+    publisher-confirm-type: correlated
+    publisher-returns: true
 producer:
   names:
     all-logging:
@@ -14,6 +16,8 @@ producer:
       routing-key: partial
     image:
       queue: image.queue
+      reply-queue: image.reply.queue
+      exchange: image.exchange
 
 springdoc:
   swagger-ui.path: /api
