@@ -17,6 +17,7 @@ producer:
     image:
       queue: image.queue
       reply-queue: image.reply.queue
+      store-queue: image.store.queue
       exchange: image.exchange
 
 springdoc:

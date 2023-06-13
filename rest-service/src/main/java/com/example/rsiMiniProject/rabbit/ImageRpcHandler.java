@@ -15,7 +15,8 @@ public class ImageRpcHandler {
   private final Queue imageQueue;
 
   public byte[] getImage(String type, int id) {
-    var imageIdMessage = MessageBuilder.withBody(String.join(".", String.valueOf(id), type).getBytes()).build();
+    var imageIdMessage =
+        MessageBuilder.withBody(String.join(".", String.valueOf(id), type).getBytes()).build();
     var result = replyImageRabbitTemplate.sendAndReceive(imageQueue.getName(), imageIdMessage);
 
     if (result != null) {

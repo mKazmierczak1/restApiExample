@@ -1,7 +1,7 @@
 package com.example.rsiMiniProject.controller;
 
-import com.example.rsiMiniProject.exeptions.ImageNotFoundException;
-import com.example.rsiMiniProject.exeptions.IncorrectNewImageException;
+import com.example.rsiMiniProject.exceptions.ImageNotFoundException;
+import com.example.rsiMiniProject.exceptions.IncorrectNewImageException;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

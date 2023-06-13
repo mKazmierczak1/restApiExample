@@ -1,6 +1,6 @@
 package com.example.rsiMiniProject.controller;
 
-import com.example.rsiMiniProject.exeptions.IncorrectNewImageException;
+import com.example.rsiMiniProject.exceptions.IncorrectNewImageException;
 import com.example.rsiMiniProject.model.TextMessage;
 import com.example.rsiMiniProject.service.MessageService;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,11 @@
 package com.example.rsiMiniProject.rabbit;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
@@ -24,6 +28,8 @@ public class ImageRpcServer {
   private final TopicExchange imageExchange;
   private final Queue replyImageQueue;
 
+  private static final Path SERVER_BASE_PATH = Paths.get("rest-service/src/main/resources/img");
+
   @RabbitListener(queues = "${producer.names.image.queue}")
   public void listen(Message message) throws IOException {
     var imageName = new String(message.getBody());
@@ -45,5 +51,20 @@ public class ImageRpcServer {
 
     template.sendAndReceive(
         imageExchange.getName(), replyImageQueue.getName(), build, correlationData);
+  }
+
+  @RabbitListener(queues = "${producer.names.image.store-queue}")
+  public void store(Message message) throws IOException {
+    var outputStream = getFilePath();
+    outputStream.write(message.getBody());
+    outputStream.flush();
+    outputStream.close();
+
+    log.info("New image saved!");
+  }
+
+  private OutputStream getFilePath() throws IOException {
+    var fileName = "3.jpg";
+    return Files.newOutputStream(SERVER_BASE_PATH.resolve(fileName));
   }
 }

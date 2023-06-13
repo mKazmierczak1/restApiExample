@@ -53,6 +53,11 @@ public class RabbitConfig {
   }
 
   @Bean
+  public Queue storeImageQueue(@Value("${producer.names.image.store-queue}") String queueName) {
+    return new Queue(queueName, false);
+  }
+
+  @Bean
   public TopicExchange imageExchange(
       @Value("${producer.names.image.exchange}") String exchangeName) {
     return new TopicExchange(exchangeName, false, true);
