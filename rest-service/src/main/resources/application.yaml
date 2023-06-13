@@ -1,0 +1,19 @@
+spring:
+  rabbitmq:
+    port: 5672
+    host: localhost
+    username: guest
+    password: guest
+producer:
+  names:
+    all-logging:
+      queue: all.logging.queue
+    partial-logging:
+      queue: partial.logging.queue
+      exchange: partial.logging.exchange
+      routing-key: partial
+    image:
+      queue: image.queue
+
+springdoc:
+  swagger-ui.path: /api
